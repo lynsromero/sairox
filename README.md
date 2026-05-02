@@ -39,6 +39,23 @@ Sairox is a modern, lightweight CMS built with Laravel and Filament as a WordPre
 
 ## How Much Is Completed
 
+### Date: 02/05/2026
+
+**Description:**
+
+- Media management system added:
+    - MediaFile model created
+    - MediaFiles Filament 5 resource with Create, Edit, List pages
+    - Database migration for `media_files` table (title, file_path, file_type, file_size)
+- Admin panel UI improvements:
+    - Brand name set to "Sairox"
+    - Collapsible navigation groups for Posts and Media
+    - Custom CSS styling for sidebar navigation (tighter spacing, polished group labels, active item highlight)
+- Database migration bug fix:
+    - Fixed `$navigationGroup` type hint in MediaFileResource to match Filament 5 parent class (`UnitEnum` instead of `BackedEnum`)
+
+---
+
 ### Date: 19/04/2026
 
 **Description:**
