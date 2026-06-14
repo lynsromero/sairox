@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\PageCache;
 use App\Http\Middleware\VerifyApiKey;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -15,6 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'api.key' => VerifyApiKey::class,
+        ]);
+
+        $middleware->web(append: [
+            PageCache::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

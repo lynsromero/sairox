@@ -5,18 +5,32 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\Post;
 use App\Models\Term;
+use App\Sairox\ThemeManager;
+use Illuminate\Support\Facades\View;
 
 class FrontendController extends Controller
 {
+    protected ThemeManager $themeManager;
+
+    public function __construct()
+    {
+        $this->themeManager = app(ThemeManager::class);
+    }
+
+    protected function resolveView(string $view): string
+    {
+        return $this->themeManager->getThemeView($view);
+    }
+
     public function home()
     {
         $posts = Post::with('author', 'categories', 'tags')
             ->where('post_type', 'post')
             ->where('post_status', 'publish')
             ->latest()
-            ->paginate(10);
+            ->paginate((int) get_option('posts_per_page', 10));
 
-        return view('front.home', compact('posts'));
+        return view($this->resolveView('index'), compact('posts'));
     }
 
     public function post(string $slug)
@@ -27,7 +41,7 @@ class FrontendController extends Controller
             ->where('slug', $slug)
             ->firstOrFail();
 
-        return view('front.post', compact('post'));
+        return view($this->resolveView('single'), compact('post'));
     }
 
     public function page(string $slug)
@@ -39,7 +53,9 @@ class FrontendController extends Controller
 
         $template = $page->getAttribute('template') ?? 'default';
 
-        $view = 'front.page';
+        $view = $template !== 'default' && View::exists("theme::{$template}")
+            ? "theme::{$template}"
+            : $this->resolveView('page');
 
         return view($view, compact('page'));
     }
@@ -56,9 +72,12 @@ class FrontendController extends Controller
             ->where('post_type', 'post')
             ->where('post_status', 'publish')
             ->latest()
-            ->paginate(10);
+            ->paginate((int) get_option('posts_per_page', 10));
 
-        return view('front.category', compact('category', 'posts'));
+        $title = 'Category: '.$category->name;
+        $description = $category->description ?? '';
+
+        return view($this->resolveView('archive'), compact('category', 'posts', 'title', 'description'));
     }
 
     public function tag(string $slug)
@@ -73,8 +92,11 @@ class FrontendController extends Controller
             ->where('post_type', 'post')
             ->where('post_status', 'publish')
             ->latest()
-            ->paginate(10);
+            ->paginate((int) get_option('posts_per_page', 10));
 
-        return view('front.tag', compact('tag', 'posts'));
+        $title = 'Tag: '.$tag->name;
+        $description = '';
+
+        return view($this->resolveView('archive'), compact('tag', 'posts', 'title', 'description'));
     }
 }

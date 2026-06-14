@@ -72,6 +72,9 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Users')
                     ->collapsible()
                     ->collapsed(),
+                NavigationGroup::make('Appearance')
+                    ->collapsible()
+                    ->collapsed(),
                 NavigationGroup::make('Settings')
                     ->collapsible()
                     ->collapsed(),

@@ -3,8 +3,10 @@
 namespace App\Filament\Resources\Posts\Schemas;
 
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -40,6 +42,22 @@ class PostForm
                         Select::make('post_author')
                             ->relationship('author', 'name'),
                     ])->columns(2),
+
+                Section::make('Custom Fields')
+                    ->schema([
+                        Repeater::make('custom_fields')
+                            ->relationship('meta')
+                            ->schema([
+                                TextInput::make('meta_key')
+                                    ->label('Key')
+                                    ->required()
+                                    ->maxLength(255),
+                                Textarea::make('meta_value')
+                                    ->label('Value'),
+                            ])
+                            ->defaultItems(0)
+                            ->collapsible(),
+                    ]),
             ])
             ->columns(1);
     }

@@ -1,0 +1,15 @@
+{
+    "name": "Sairox Default",
+    "slug": "sairox-default",
+    "version": "1.0.0",
+    "description": "The default Sairox CMS theme. Minimal, clean, and fast.",
+    "author": "Sairox",
+    "stack": "blade",
+    "requires": "1.0.0",
+    "widget_areas": ["sidebar", "footer"],
+    "nav_menus": ["primary", "footer"],
+    "templates": {
+        "full-width": "Full Width Page",
+        "landing": "Landing Page"
+    }
+}

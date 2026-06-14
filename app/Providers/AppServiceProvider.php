@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Models\Option;
 use App\Sairox\License\LicenseService;
+use App\Sairox\ThemeManager;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -13,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->singleton(LicenseService::class);
+        $this->app->singleton(ThemeManager::class);
     }
 
     public function boot(): void
