@@ -1,6 +1,9 @@
 <?php
 
 return [
+
+    'media_disk' => env('SAIROX_MEDIA_DISK', 'public'),
+
     'free_features' => [
         'posts', 'pages', 'categories', 'tags', 'custom-post-types',
         'media-upload', 'media-cdn', 'image-optimization-100',
