@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('post_author')->unsigned()->default(0);
             $table->longText('post_content');
             $table->text('post_title');
-            $table->text('post_excerpt');
+            $table->text('post_excerpt')->nullable();
             $table->string('post_status')->default('publish');
             $table->string('comment_status')->default('open');
             $table->string('slug')->unique();

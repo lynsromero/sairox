@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Cache;
 if (! function_exists('get_option')) {
     function get_option(string $key, mixed $default = null): mixed
     {
-        static $cache = [];
-        if (isset($cache[$key])) {
-            return $cache[$key];
+        $cacheKey = "option_{$key}";
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
         }
         $option = Option::where('option_name', $key)->first();
-        $cache[$key] = $option ? $option->option_value : $default;
+        $value = $option ? $option->option_value : $default;
+        Cache::put($cacheKey, $value, 86400);
 
-        return $cache[$key];
+        return $value;
     }
 }
 
@@ -25,6 +26,7 @@ if (! function_exists('set_option')) {
             ['option_name' => $key],
             ['option_value' => $value]
         );
+        Cache::forget("option_{$key}");
     }
 }
 

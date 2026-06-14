@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class Page extends Post
 {
+    protected $table = 'posts';
+
     protected $attributes = [
         'post_type' => 'page',
     ];
