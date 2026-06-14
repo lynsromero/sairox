@@ -30,6 +30,11 @@ class ListPosts extends ListRecords
                 ->badge(Post::where('post_status', 'publish')->count())
                 ->badgeColor('success'),
 
+            'scheduled' => Tab::make('Scheduled')
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('post_status', 'scheduled'))
+                ->badge(Post::where('post_status', 'scheduled')->count())
+                ->badgeColor('info'),
+
             'drafts' => Tab::make('Drafts')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('post_status', 'draft'))
                 ->badge(Post::where('post_status', 'draft')->count())

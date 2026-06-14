@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Posts\Schemas;
 
+use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
@@ -37,7 +38,15 @@ class PostForm
                             ->columnSpanFull(),
 
                         Select::make('post_status')
-                            ->options(['publish' => 'Publish', 'draft' => 'Draft']),
+                            ->options(['publish' => 'Publish', 'draft' => 'Draft', 'scheduled' => 'Scheduled'])
+                            ->helperText(fn ($get) => $get('scheduled_at') ? 'Auto-set to Scheduled when future date is set' : ''),
+
+                        DateTimePicker::make('scheduled_at')
+                            ->label('Schedule Publication')
+                            ->native(false)
+                            ->seconds(false)
+                            ->minDate(now()->addMinute())
+                            ->helperText('Set a future date to auto-publish this post'),
 
                         Select::make('post_author')
                             ->relationship('author', 'name'),

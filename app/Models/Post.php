@@ -25,10 +25,28 @@ class Post extends Model
         'comment_count',
         'thumbnail',
         'template',
+        'scheduled_at',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'scheduled_at' => 'datetime',
+        ];
+    }
 
     protected static function booted(): void
     {
+        static::saving(function ($post) {
+            if ($post->scheduled_at && $post->scheduled_at->isFuture() && $post->post_status !== 'scheduled') {
+                $post->post_status = 'scheduled';
+            }
+
+            if (! $post->scheduled_at && $post->post_status === 'scheduled') {
+                $post->post_status = 'draft';
+            }
+        });
+
         static::saved(function ($post) {
             Cache::flush();
         });

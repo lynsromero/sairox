@@ -9,6 +9,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -35,10 +36,15 @@ class PostsTable
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'publish' => 'success',
+                        'scheduled' => 'info',
                         'draft' => 'warning',
                         'private' => 'danger',
                         default => 'gray',
                     }),
+                TextColumn::make('scheduled_at')
+                    ->label('Scheduled')
+                    ->dateTime()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 // 4. Show the Post Type
                 TextColumn::make('post_type')
@@ -52,6 +58,14 @@ class PostsTable
                     ->sortable(),
             ])
             ->filters([
+                SelectFilter::make('post_status')
+                    ->label('Status')
+                    ->options([
+                        'publish' => 'Published',
+                        'scheduled' => 'Scheduled',
+                        'draft' => 'Draft',
+                        'private' => 'Private',
+                    ]),
                 TrashedFilter::make(),
             ])
             ->recordActions([
