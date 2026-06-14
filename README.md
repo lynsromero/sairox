@@ -69,6 +69,13 @@ Sairox is a modern, lightweight CMS built with Laravel and Filament as a WordPre
 | Custom Fields / Post Meta (key-value, Filament repeater) | ✅ |
 | Full-Page Cache (middleware, cache-busting on content change) | ✅ |
 
+### Phase 3: Headless & Advanced Features (In Progress)
+
+| Feature | Status |
+|---------|--------|
+| Content Revisions (auto-snapshots, diff viewer, restore, 50 cap) | ✅ |
+| Scheduled Publishing (scheduled_at field, status management, scheduler) | ✅ |
+
 ## Project Structure
 
 ```
@@ -81,6 +88,10 @@ app/
 │   ├── Menus/                       # MenuResource (Appearance group)
 │   ├── Pages/                       # PageResource
 │   ├── Posts/                       # PostResource
+│   │   ├── RelationManagers/        # RevisionsRelationManager
+│   │   ├── Pages/ (CreatePost, EditPost, ListPosts, ViewPost)
+│   │   ├── Schemas/ (PostForm, PostInfolist)
+│   │   └── Tables/ (PostsTable)
 │   ├── Roles/                       # RoleResource
 │   ├── Settings/                    # SettingResource
 │   ├── Taxonomies/                  # CategoryResource, TagResource
@@ -97,6 +108,7 @@ app/
 ├── Models/
 │   ├── Comment.php, Menu.php, MenuItem.php
 │   ├── Option.php, Page.php, Post.php, PostMeta.php
+│   ├── Revision.php                 # Polymorphic revision snapshots
 │   ├── Taxonomy.php, Term.php
 │   ├── MediaFile.php, User.php
 │   ├── Widget.php, WidgetArea.php
@@ -104,12 +116,14 @@ app/
 │   ├── Filament/AdminPanelProvider.php
 │   ├── ThemeServiceProvider.php     # Theme view namespaces
 │   └── AppServiceProvider.php
-└── Sairox/
-    ├── ThemeManager.php
-    ├── License/
-    │   └── LicenseService.php
-    └── Media/
-        └── ImageOptimizer.php
+├── Sairox/
+│   ├── ThemeManager.php
+│   ├── License/
+│   │   └── LicenseService.php
+│   └── Media/
+│       └── ImageOptimizer.php
+└── Traits/
+    └── HasRevisions.php            # Auto-snapshot on save, restore, diff
 
 themes/
 └── sairox-default/                  # Default starter theme
