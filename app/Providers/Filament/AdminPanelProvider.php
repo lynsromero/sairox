@@ -60,6 +60,9 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->navigationGroups([
+                NavigationGroup::make('Content')
+                    ->collapsible()
+                    ->collapsed(),
                 NavigationGroup::make('Posts')
                     ->collapsible()
                     ->collapsed(),

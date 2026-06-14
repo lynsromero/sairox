@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
@@ -22,8 +24,20 @@ class Post extends Model
         'thumbnail',
     ];
 
-    public function author()
+    public function author(): BelongsTo
     {
         return $this->belongsTo(User::class, 'post_author');
+    }
+
+    public function categories(): MorphToMany
+    {
+        return $this->morphToMany(Term::class, 'termable', 'term_relationships')
+            ->whereHas('taxonomy', fn ($q) => $q->where('taxonomy', 'category'));
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Term::class, 'termable', 'term_relationships')
+            ->whereHas('taxonomy', fn ($q) => $q->where('taxonomy', 'post_tag'));
     }
 }
