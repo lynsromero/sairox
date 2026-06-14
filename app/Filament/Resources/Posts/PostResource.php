@@ -11,39 +11,42 @@ use App\Filament\Resources\Posts\Schemas\PostInfolist;
 use App\Filament\Resources\Posts\Tables\PostsTable;
 use App\Models\Post;
 use BackedEnum;
+use Filament\Navigation\NavigationItem;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Navigation\NavigationItem;
-
 
 class PostResource extends Resource
 {
-protected static ?string $model = Post::class;
-    // Use string type hints explicitly
-protected static string|\UnitEnum|null $navigationGroup = 'Posts';    
-protected static ?string $navigationLabel = 'All Posts';
-    // Ensure the Icon matches the parent type exactly
-protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $model = Post::class;
 
-public static function getNavigationItems(): array
+    // Use string type hints explicitly
+    protected static string|\UnitEnum|null $navigationGroup = 'Posts';
+
+    protected static ?string $navigationLabel = 'All Posts';
+
+    // Ensure the Icon matches the parent type exactly
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    public static function getNavigationItems(): array
     {
         return [
             // The default "All Posts" link
-            ...parent::getNavigationItems(), 
-            
+            ...parent::getNavigationItems(),
+
             // The manual "Add Post" link
             NavigationItem::make('Add Post')
                 ->group('Posts')
                 ->icon(Heroicon::OutlinedPlusCircle)
                 ->url(static::getUrl('create'))
-                ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName() . '.create')),
+                ->isActiveWhen(fn () => request()->routeIs(static::getRouteBaseName().'.create')),
         ];
     }
-   public static function form(Schema $schema): Schema
+
+    public static function form(Schema $schema): Schema
     {
         return PostForm::configure($schema);
     }

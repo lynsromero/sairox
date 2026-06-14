@@ -8,17 +8,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Post extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
-        "post_author",
-        "post_content",
-        "post_title",
-        "post_excerpt",
-        "post_status",
-        "comment_status",
-        "slug",
-        "post_type",
-        "comment_count",
-        "thumbnail"
+        'post_author',
+        'post_content',
+        'post_title',
+        'post_excerpt',
+        'post_status',
+        'comment_status',
+        'slug',
+        'post_type',
+        'comment_count',
+        'thumbnail',
     ];
 
     public function author()

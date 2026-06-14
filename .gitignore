@@ -18,6 +18,8 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/Plan
+/agents.md
 /vendor
 _ide_helper.php
 Homestead.json

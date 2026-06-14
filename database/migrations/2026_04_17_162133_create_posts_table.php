@@ -14,17 +14,17 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('post_author')->unsigned()->default(0);
-            $table->longText('post_content')->collation('utf8mb4_unicode_ci');
-            $table->text('post_title')->collation('utf8mb4_unicode_ci');
-            $table->text('post_excerpt')->collation('utf8mb4_unicode_ci');
-            $table->string('post_status')->collation('utf8mb4_unicode_ci')->default('publish');
-            $table->string('comment_status')->collation('utf8mb4_unicode_ci')->default('open');
+            $table->longText('post_content');
+            $table->text('post_title');
+            $table->text('post_excerpt');
+            $table->string('post_status')->default('publish');
+            $table->string('comment_status')->default('open');
             $table->string('slug')->unique();
             $table->string('post_type')->default('post');
             $table->bigInteger('comment_count')->default('0');
             $table->timestamps();
             $table->softDeletes();
-            
+
         });
     }
 

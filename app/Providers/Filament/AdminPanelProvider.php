@@ -66,10 +66,13 @@ class AdminPanelProvider extends PanelProvider
                 NavigationGroup::make('Media')
                     ->collapsible()
                     ->collapsed(),
+                NavigationGroup::make('Users')
+                    ->collapsible()
+                    ->collapsed(),
             ])
             ->renderHook(
                 'panels::head.done',
-                fn(): string => new HtmlString('
+                fn (): string => new HtmlString('
                     <style>
                         /* Tighten the vertical gap between the Group Label and Items */
                         .fi-sidebar-group {
