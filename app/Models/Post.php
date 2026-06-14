@@ -22,6 +22,7 @@ class Post extends Model
         'post_type',
         'comment_count',
         'thumbnail',
+        'template',
     ];
 
     public function author(): BelongsTo
