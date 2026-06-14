@@ -20,9 +20,12 @@ class MediaFileResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-photo';
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Media';
-
     protected static ?string $navigationLabel = 'All Media Files';
+
+    public static function getNavigationGroup(): string|\UnitEnum|null
+    {
+        return 'Media';
+    }
 
     public static function getNavigationItems(): array
     {

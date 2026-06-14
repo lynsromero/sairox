@@ -20,7 +20,10 @@ class RoleResource extends Resource
 {
     protected static ?string $model = Role::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Users';
+    public static function getNavigationGroup(): string|\UnitEnum|null
+    {
+        return 'Users';
+    }
 
     protected static ?string $navigationLabel = 'Roles';
 

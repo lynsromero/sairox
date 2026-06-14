@@ -19,7 +19,10 @@ class PermissionResource extends Resource
 {
     protected static ?string $model = Permission::class;
 
-    protected static string|\UnitEnum|null $navigationGroup = 'Users';
+    public static function getNavigationGroup(): string|\UnitEnum|null
+    {
+        return 'Users';
+    }
 
     protected static ?string $navigationLabel = 'Permissions';
 

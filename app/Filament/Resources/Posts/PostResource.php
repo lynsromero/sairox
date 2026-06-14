@@ -24,7 +24,10 @@ class PostResource extends Resource
     protected static ?string $model = Post::class;
 
     // Use string type hints explicitly
-    protected static string|\UnitEnum|null $navigationGroup = 'Posts';
+    public static function getNavigationGroup(): string|\UnitEnum|null
+    {
+        return 'Posts';
+    }
 
     protected static ?string $navigationLabel = 'All Posts';
 
